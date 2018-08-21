@@ -17,9 +17,11 @@ package store
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+	"strings"
+
 	"github.com/open-falcon/falcon-plus/common/model"
 	"github.com/open-falcon/falcon-plus/modules/judge/g"
-	"log"
 )
 
 func Judge(L *SafeLinkedList, firstItem *model.JudgeItem, now int64) {
@@ -142,6 +144,7 @@ func filterRelatedExpressions(expressions []*model.Expression, firstItem *model.
 	for _, exp := range expressions {
 
 		related := true
+		exclude := false
 
 		itemTagsCopy := firstItem.Tags
 		// 注意：exp.Tags 中可能会有一个endpoint=xxx的tag
@@ -150,13 +153,18 @@ func filterRelatedExpressions(expressions []*model.Expression, firstItem *model.
 		}
 
 		for tagKey, tagVal := range exp.Tags {
+			if strings.Contains(tagKey, "!") {
+				exclude = true
+				tagKey = strings.TrimLeft(tagKey, "!")
+			}
+
 			if myVal, exists := itemTagsCopy[tagKey]; !exists || myVal != tagVal {
 				related = false
 				break
 			}
 		}
 
-		if !related {
+		if !related || exclude {
 			continue
 		}
 
