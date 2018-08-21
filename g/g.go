@@ -23,7 +23,9 @@ import (
 // 2.0.1: bugfix HistoryData limit
 // 2.0.2: clean stale data
 const (
-	VERSION = "2.0.2"
+	OFFICIAL_VERSION = "2.0.2"
+	DADA_VERSION     = "1.0.0"
+	VERSION          = DADA_VERSION
 )
 
 func init() {

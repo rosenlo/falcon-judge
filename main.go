@@ -17,15 +17,38 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+
 	"github.com/open-falcon/falcon-plus/modules/judge/cron"
 	"github.com/open-falcon/falcon-plus/modules/judge/g"
 	"github.com/open-falcon/falcon-plus/modules/judge/http"
 	"github.com/open-falcon/falcon-plus/modules/judge/rpc"
 	"github.com/open-falcon/falcon-plus/modules/judge/store"
-	"os"
 )
 
+var (
+	GitCommit string
+	BuildTime string
+	Version   string
+)
+
+func init() {
+	if GitCommit == "" {
+		GitCommit = "UnKnown"
+	}
+
+	if BuildTime == "" {
+		BuildTime = "UnKnown"
+	}
+}
+
+func displayVersion() {
+	fmt.Println("Git Commit: ", GitCommit)
+	fmt.Println("Build Time: ", BuildTime)
+}
+
 func main() {
+	displayVersion()
 	cfg := flag.String("c", "cfg.json", "configuration file")
 	version := flag.Bool("v", false, "show version")
 	flag.Parse()
