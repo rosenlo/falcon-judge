@@ -80,26 +80,23 @@ function tailf() {
 }
 
 function build() {
-    go build
+    make
     if [ $? -ne 0 ]; then
         exit $?
     fi
     mv $module $app
-    ./$app -v
 }
 
 function pack() {
     build
-    git log -1 --pretty=%h > gitversion
-    version=`./$app -v`
-    tar zcvf $app-$version.tar.gz control $app cfg.example.json gitversion
+    gitversion=`git log -1 --pretty=%h`
+    tar zcvf $app-$gitversion.tar.gz control $app cfg.json
 }
 
 function packbin() {
     build
-    git log -1 --pretty=%h > gitversion
-    version=`./$app -v`
-    tar zcvf $app-bin-$version.tar.gz $app gitversion
+    gitversion=`git log -1 --pretty=%h`
+    tar zcvf $app-bin-$gitversion.tar.gz $app
 }
 
 function help() {
