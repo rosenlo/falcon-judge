@@ -17,7 +17,10 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/open-falcon/falcon-plus/modules/judge/cron"
 	"github.com/open-falcon/falcon-plus/modules/judge/g"
@@ -47,6 +50,25 @@ func displayVersion() {
 	fmt.Println("Build Time: ", BuildTime)
 }
 
+func start_signal(pid int) {
+	sigs := make(chan os.Signal, 1)
+	log.Println(pid, "register signal notify")
+	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+
+	for {
+		s := <-sigs
+		log.Println("recv", s)
+
+		switch s {
+		case syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT:
+			store.SaveEventToFile()
+			log.Println("graceful shut down")
+			log.Println(pid, "exit")
+			os.Exit(0)
+		}
+	}
+}
+
 func main() {
 	displayVersion()
 	cfg := flag.String("c", "cfg.json", "configuration file")
@@ -64,6 +86,7 @@ func main() {
 	g.InitHbsClient()
 
 	store.InitHistoryBigMap()
+	store.ReadEventFromFile()
 
 	go http.Start()
 	go rpc.Start()
@@ -71,5 +94,5 @@ func main() {
 	go cron.SyncStrategies()
 	go cron.CleanStale()
 
-	select {}
+	start_signal(os.Getpid())
 }

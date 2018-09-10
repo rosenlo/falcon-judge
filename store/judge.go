@@ -22,6 +22,7 @@ import (
 
 	"github.com/open-falcon/falcon-plus/common/model"
 	"github.com/open-falcon/falcon-plus/modules/judge/g"
+	"github.com/open-falcon/falcon-plus/modules/judge/utils"
 )
 
 func Judge(L *SafeLinkedList, firstItem *model.JudgeItem, now int64) {
@@ -153,12 +154,14 @@ func filterRelatedExpressions(expressions []*model.Expression, firstItem *model.
 		}
 
 		for tagKey, tagVal := range exp.Tags {
-			if strings.Contains(tagKey, "!") {
+			if strings.Contains(tagVal, "^") {
 				exclude = true
-				tagKey = strings.TrimLeft(tagKey, "!")
+				tagVal = strings.TrimLeft(tagVal, "^")
 			}
 
-			if myVal, exists := itemTagsCopy[tagKey]; !exists || myVal != tagVal {
+			myVal, exists := itemTagsCopy[tagKey]
+			if !exists || exclude && myVal == tagVal || myVal != tagVal {
+				log.Println(tagKey, tagVal)
 				related = false
 				break
 			}
@@ -253,5 +256,33 @@ func sendEventIfNeed(historyData []*model.HistoryData, isTriggered bool, now int
 			event.CurrentStep = 1
 			sendEvent(event)
 		}
+	}
+}
+
+func SaveEventToFile() {
+	g.LastEvents.Lock()
+	defer g.LastEvents.Unlock()
+	data, err := json.Marshal(g.LastEvents.M)
+	if err != nil {
+		log.Printf("[ERROR] json marshal fail: %v.", err)
+	}
+	err = utils.WriteFile(g.Config().EventFile, data, 0755)
+	if err != nil {
+		log.Printf("[ERROR] write file fail: %v.", err)
+	}
+}
+
+func ReadEventFromFile() {
+	g.LastEvents.Lock()
+	defer g.LastEvents.Unlock()
+	fdata, err := utils.ReadFile(g.Config().EventFile)
+	if err != nil {
+		log.Printf("[ERROR] read file fail: %v.", err)
+		return
+	}
+	err = json.Unmarshal(fdata, g.LastEvents.M)
+	if err != nil {
+		log.Printf("[ERROR] json unmarshal fail: %v.", err)
+		return
 	}
 }
