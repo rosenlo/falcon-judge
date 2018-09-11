@@ -270,6 +270,7 @@ func SaveEventToFile() {
 	if err != nil {
 		log.Printf("[ERROR] write file fail: %v.", err)
 	}
+	log.Println("write event file:", g.Config().EventFile, "successfully")
 }
 
 func ReadEventFromFile() {
@@ -280,9 +281,10 @@ func ReadEventFromFile() {
 		log.Printf("[ERROR] read file fail: %v.", err)
 		return
 	}
-	err = json.Unmarshal(fdata, g.LastEvents.M)
+	err = json.Unmarshal(fdata, &g.LastEvents.M)
 	if err != nil {
 		log.Printf("[ERROR] json unmarshal fail: %v.", err)
 		return
 	}
+	log.Println("read event file:", g.Config().EventFile, "successfully")
 }
