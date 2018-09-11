@@ -1,4 +1,4 @@
-// Copyright 2018 Rosen
+// Copyright 2018 RosenLo
 
 // Copyright 2017 Xiaomi, Inc.
 //
@@ -15,7 +15,7 @@
 // limitations under the License.
 
 /**
- * This code was originally worte by Xiaomi, Inc. modified by Rosen.
+ * This code was originally worte by Xiaomi, Inc. modified by RosenLo.
 **/
 
 package store
