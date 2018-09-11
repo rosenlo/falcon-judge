@@ -1,7 +1,7 @@
 {
     "debug": true,
     "debugHost": "nil",
-    "remain": 11, 
+    "remain": 11,
     "http": {
         "enabled": true,
         "listen": "0.0.0.0:6081"
@@ -26,5 +26,6 @@
             "readTimeout": 5000,
             "writeTimeout": 5000
         }
-    }
+    },
+    "event_file": "last_event.json"
 }
