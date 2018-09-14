@@ -21,7 +21,7 @@ import (
 )
 
 func WriteFile(filename string, data []byte, perm os.FileMode) error {
-	f, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE, perm)
+	f, err := os.OpenFile(filename, os.O_RDWR|os.O_TRUNC|os.O_CREATE, perm)
 	if err != nil {
 		return err
 	}
