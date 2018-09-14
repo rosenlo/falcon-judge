@@ -160,14 +160,22 @@ func filterRelatedExpressions(expressions []*model.Expression, firstItem *model.
 		}
 
 		for tagKey, tagVal := range exp.Tags {
+			myVal, exists := itemTagsCopy[tagKey]
+			if !exists {
+				continue
+			}
 			if strings.Contains(tagVal, "^") {
 				exclude = true
-				tagVal = strings.TrimLeft(tagVal, "^")
+				val := strings.TrimLeft(tagVal, "^")
+				if myVal == val {
+					break
+				} else {
+					exclude = false
+					continue
+				}
 			}
 
-			myVal, exists := itemTagsCopy[tagKey]
-			if !exists || exclude && myVal == tagVal || myVal != tagVal {
-				log.Println(tagKey, tagVal)
+			if myVal != tagVal {
 				related = false
 				break
 			}
@@ -179,7 +187,9 @@ func filterRelatedExpressions(expressions []*model.Expression, firstItem *model.
 
 		exps = append(exps, exp)
 	}
-
+	if g.Config().Debug {
+		log.Println("endpoint:", firstItem.Endpoint, "expressions:", exps)
+	}
 	return exps
 }
 
@@ -271,10 +281,12 @@ func SaveEventToFile() {
 	data, err := json.Marshal(g.LastEvents.M)
 	if err != nil {
 		log.Printf("[ERROR] json marshal fail: %v.", err)
+		return
 	}
 	err = utils.WriteFile(g.Config().EventFile, data, 0755)
 	if err != nil {
 		log.Printf("[ERROR] write file fail: %v.", err)
+		return
 	}
 	log.Println("write event file:", g.Config().EventFile, "successfully")
 }
