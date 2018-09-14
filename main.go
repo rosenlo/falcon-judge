@@ -56,7 +56,7 @@ func displayVersion() {
 	fmt.Println("Build Time: ", BuildTime)
 }
 
-func start_signal(pid int) {
+func startSignal(pid int) {
 	sigs := make(chan os.Signal, 1)
 	log.Println(pid, "register signal notify")
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
@@ -100,5 +100,5 @@ func main() {
 	go cron.SyncStrategies()
 	go cron.CleanStale()
 
-	start_signal(os.Getpid())
+	startSignal(os.Getpid())
 }
