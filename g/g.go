@@ -1,3 +1,5 @@
+// Copyright 2018 RosenLo
+
 // Copyright 2017 Xiaomi, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +14,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/**
+ * This code was originally worte by Xiaomi, Inc. modified by RosenLo.
+**/
+
 package g
 
 import (
@@ -24,8 +30,7 @@ import (
 // 2.0.2: clean stale data
 const (
 	OFFICIAL_VERSION = "2.0.2"
-	DADA_VERSION     = "1.0.0"
-	VERSION          = DADA_VERSION
+	VERSION          = "1.1.0"
 )
 
 func init() {
