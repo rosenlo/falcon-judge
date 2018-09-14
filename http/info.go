@@ -1,3 +1,5 @@
+// Copyright 2018 RosenLo
+
 // Copyright 2017 Xiaomi, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,15 +14,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/**
+ * This code was originally worte by Xiaomi, Inc. modified by RosenLo.
+**/
+
 package http
 
 import (
 	"fmt"
+	"net/http"
+	"strings"
+
 	"github.com/open-falcon/falcon-plus/common/utils"
 	"github.com/open-falcon/falcon-plus/modules/judge/g"
 	"github.com/open-falcon/falcon-plus/modules/judge/store"
-	"net/http"
-	"strings"
 )
 
 func configInfoRoutes() {
@@ -80,4 +87,9 @@ func configInfoRoutes() {
 		w.Write([]byte(strings.Join(arr, "")))
 	})
 
+	http.HandleFunc("/events/", func(w http.ResponseWriter, r *http.Request) {
+		g.LastEvents.Lock()
+		defer g.LastEvents.Unlock()
+		RenderDataJson(w, g.LastEvents.M)
+	})
 }
