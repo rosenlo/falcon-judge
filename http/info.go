@@ -25,9 +25,9 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/RosenLo/falcon-judge/g"
+	"github.com/RosenLo/falcon-judge/store"
 	"github.com/open-falcon/falcon-plus/common/utils"
-	"github.com/open-falcon/falcon-plus/modules/judge/g"
-	"github.com/open-falcon/falcon-plus/modules/judge/store"
 )
 
 func configInfoRoutes() {

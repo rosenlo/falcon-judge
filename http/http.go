@@ -16,10 +16,11 @@ package http
 
 import (
 	"encoding/json"
-	"github.com/open-falcon/falcon-plus/modules/judge/g"
 	"log"
 	"net/http"
 	_ "net/http/pprof"
+
+	"github.com/RosenLo/falcon-judge/g"
 )
 
 type Dto struct {
