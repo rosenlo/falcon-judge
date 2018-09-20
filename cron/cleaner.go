@@ -15,8 +15,9 @@
 package cron
 
 import (
-	"github.com/open-falcon/falcon-plus/modules/judge/store"
 	"time"
+
+	"github.com/RosenLo/falcon-judge/store"
 )
 
 func CleanStale() {

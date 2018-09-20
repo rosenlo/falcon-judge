@@ -26,9 +26,9 @@ import (
 	"log"
 	"strings"
 
+	"github.com/RosenLo/falcon-judge/g"
+	"github.com/RosenLo/falcon-judge/utils"
 	"github.com/open-falcon/falcon-plus/common/model"
-	"github.com/open-falcon/falcon-plus/modules/judge/g"
-	"github.com/open-falcon/falcon-plus/modules/judge/utils"
 )
 
 func Judge(L *SafeLinkedList, firstItem *model.JudgeItem, now int64) {

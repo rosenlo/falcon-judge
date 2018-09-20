@@ -28,11 +28,11 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/open-falcon/falcon-plus/modules/judge/cron"
-	"github.com/open-falcon/falcon-plus/modules/judge/g"
-	"github.com/open-falcon/falcon-plus/modules/judge/http"
-	"github.com/open-falcon/falcon-plus/modules/judge/rpc"
-	"github.com/open-falcon/falcon-plus/modules/judge/store"
+	"github.com/RosenLo/falcon-judge/cron"
+	"github.com/RosenLo/falcon-judge/g"
+	"github.com/RosenLo/falcon-judge/http"
+	"github.com/RosenLo/falcon-judge/rpc"
+	"github.com/RosenLo/falcon-judge/store"
 )
 
 var (

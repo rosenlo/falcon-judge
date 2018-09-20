@@ -15,10 +15,11 @@
 package rpc
 
 import (
-	"github.com/open-falcon/falcon-plus/modules/judge/g"
 	"log"
 	"net"
 	"net/rpc"
+
+	"github.com/RosenLo/falcon-judge/g"
 )
 
 func Start() {

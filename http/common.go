@@ -15,10 +15,11 @@
 package http
 
 import (
-	"github.com/open-falcon/falcon-plus/modules/judge/g"
-	"github.com/toolkits/file"
 	"net/http"
 	"strings"
+
+	"github.com/RosenLo/falcon-judge/g"
+	"github.com/toolkits/file"
 )
 
 func configCommonRoutes() {
