@@ -51,17 +51,19 @@ type AlarmConfig struct {
 	MinInterval  int64        `json:"minInterval"`
 	QueuePattern string       `json:"queuePattern"`
 	Redis        *RedisConfig `json:"redis"`
+	Upgrade      int          `json:"upgrade"`
 }
 
 type GlobalConfig struct {
-	Debug     bool         `json:"debug"`
-	DebugHost string       `json:"debugHost"`
-	Remain    int          `json:"remain"`
-	Http      *HttpConfig  `json:"http"`
-	Rpc       *RpcConfig   `json:"rpc"`
-	Hbs       *HbsConfig   `json:"hbs"`
-	Alarm     *AlarmConfig `json:"alarm"`
-	EventFile string       `json:"event_file"`
+	Debug      bool         `json:"debug"`
+	RaiseAlarm bool         `json:"raise_alarm"`
+	DebugHost  string       `json:"debugHost"`
+	Remain     int          `json:"remain"`
+	Http       *HttpConfig  `json:"http"`
+	Rpc        *RpcConfig   `json:"rpc"`
+	Hbs        *HbsConfig   `json:"hbs"`
+	Alarm      *AlarmConfig `json:"alarm"`
+	EventFile  string       `json:"event_file"`
 }
 
 var (

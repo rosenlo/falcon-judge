@@ -1,5 +1,6 @@
 {
     "debug": true,
+    "raise_alarm": false,
     "debugHost": "nil",
     "remain": 11,
     "http": {

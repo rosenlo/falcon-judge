@@ -165,14 +165,12 @@ func filterRelatedExpressions(expressions []*model.Expression, firstItem *model.
 				continue
 			}
 			if strings.Contains(tagVal, "^") {
-				exclude = true
 				val := strings.TrimLeft(tagVal, "^")
-				if myVal == val {
-					break
-				} else {
-					exclude = false
+				if myVal != val {
 					continue
 				}
+				exclude = true
+				break
 			}
 
 			if myVal != tagVal {
@@ -244,6 +242,12 @@ func sendEventIfNeed(historyData []*model.HistoryData, isTriggered bool, now int
 
 			sendEvent(event)
 			return
+		}
+		// 报警升级：非 P0 连续报 3 次后升一级
+		if g.Config().RaiseAlarm {
+			if lastEvent.CurrentStep >= 2 && lastEvent.CurrentStep%g.Config().Alarm.Upgrade == 0 && lastEvent.Priority() != 0 && lastEvent.Strategy != nil {
+				lastEvent.Strategy.Priority -= 1
+			}
 		}
 
 		// 逻辑走到这里，说明之前Event是PROBLEM状态
